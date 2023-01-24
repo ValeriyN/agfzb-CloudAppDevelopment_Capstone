@@ -2,7 +2,12 @@
 
 {% block content %}
     <!-- Remove this line the first time you edit this file -->
-    This is the index page of your Django app!
+    <h1>List of Dealers</h1>
+    <ul>
+    {% for dealer in dealers %}
+        <li><strong>{{ dealer.full_name }}</strong> ({{dealer.zip}}, {{dealer.state}}, {{dealer.city}}, {{dealer.address}}) </li>
+    {% endfor %}
+    </ul>
     <!--Add a nav bar here -->
 
     <!--Add a dealer table here -->
