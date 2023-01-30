@@ -53,15 +53,17 @@ def get_dealers_from_cf(url, **kwargs):
 
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
-def get_dealer_by_id_from_cf(url, dealerId):
+def get_dealer_reviews_from_cf(url, dealer_id):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a DealerView object list
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url, dealerId=dealerId)
+    json_result = get_request(url, dealerId=dealer_id)
     if json_result:
         # Get the row list in JSON as reviews
         reviews = json_result
+        # from django.http import HttpResponseRedirect, HttpResponse
+        # return HttpResponse(reviews)
         # For each review object
         for review in reviews:
             # Create a DealerReview object
