@@ -1,7 +1,7 @@
 import requests
 import json
 # import related models here
-from .models import CarDealer
+from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 
 
@@ -62,16 +62,17 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     if json_result:
         # Get the row list in JSON as reviews
         reviews = json_result
-        # from django.http import HttpResponseRedirect, HttpResponse
-        # return HttpResponse(reviews)
+
         # For each review object
         for review in reviews:
             # Create a DealerReview object
+            review["sentiment"] = ""
             review_obj = DealerReview(dealership = review["dealership"], name = review["name"], 
                                     purchase = review["purchase"], review = review["review"], 
                                     purchase_date = review["purchase_date"], car_make = review["car_make"], 
                                     car_model = review["car_model"], car_year = review["car_year"], 
                                     sentiment = review["sentiment"], id = review["id"])
+            
             results.append(review_obj)
 
     return results

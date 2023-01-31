@@ -1,4 +1,25 @@
-<!DOCTYPE html>
+{% extends './basic.html' %}
+
+{% block content %}
+    <!-- Remove this line the first time you edit this file -->
+    <h1>List of Dealer Reviews</h1>
+    <ul>
+    {% for review in reviews %}
+        <li><strong>{{ review.review }}</strong> <br>
+        ({{review.dealership}}, {{review.name}}, {{review.purchase}}, 
+        {{review.purchase_date}}, {{review.car_make}}, {{review.car_model}}
+        {{review.car_year}}, {{review.sentiment}}, {{review.id}}) 
+        </li>
+    {% endfor %}
+    </ul>
+
+    <!--Add a nav bar here -->
+
+    <!--Add a dealer table here -->
+{% endblock %}
+
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,10 +30,10 @@
 
     <body>
 
-    <!--Add a nav bar here -->
+    Add a nav bar here
 
-    <!-- Add reviews as cards -->
+    Add reviews as cards
 
     </body>
 
-</html>
+</html> -->
