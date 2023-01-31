@@ -6,9 +6,9 @@
     <ul>
     {% for review in reviews %}
         <li><strong>{{ review.review }}</strong> <br>
-        ({{review.dealership}}, {{review.name}}, {{review.purchase}}, 
-        {{review.purchase_date}}, {{review.car_make}}, {{review.car_model}}
-        {{review.car_year}}, {{review.sentiment}}, {{review.id}}) 
+        (id: {{review.id}}, name: {{review.name}}, dealership: {{review.dealership}}, purchase: {{review.purchase}}, 
+        purchase_date: {{review.purchase_date}}, car_make: {{review.car_make}}, car_model: {{review.car_model}}
+        car_year: {{review.car_year}}, sentiment: {{review.sentiment}}) 
         </li>
     {% endfor %}
     </ul>

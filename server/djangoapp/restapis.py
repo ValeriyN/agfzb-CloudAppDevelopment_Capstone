@@ -69,7 +69,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             id = review["id"]
             name = review["name"]
             dealership = review["dealership"]
-            review = review["review"]
+            review_txt = review["review"]
             purchase = review["purchase"]          
             purchase_date = review.get("purchase_date", "-")
             car_make = review.get("car_make", "-")
@@ -77,9 +77,9 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             car_year = review.get("car_year", "-")
             sentiment = review.get("sentiment", "-")
             
-            review_obj = DealerReview(dealership = dealership, name = name, purchase = purchase, review = review, 
+            review_obj = DealerReview(id = id, name = name, dealership = dealership, review = review_txt, purchase = purchase, 
                                     purchase_date = purchase_date, car_make = car_make, car_model = car_model, 
-                                    car_year = car_year, sentiment = sentiment, id = id)
+                                    car_year = car_year, sentiment = sentiment )
             
             results.append(review_obj)
 
