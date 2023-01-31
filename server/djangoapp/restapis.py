@@ -66,12 +66,20 @@ def get_dealer_reviews_from_cf(url, dealer_id):
         # For each review object
         for review in reviews:
             # Create a DealerReview object
-            review["sentiment"] = ""
-            review_obj = DealerReview(dealership = review["dealership"], name = review["name"], 
-                                    purchase = review["purchase"], review = review["review"], 
-                                    purchase_date = review["purchase_date"], car_make = review["car_make"], 
-                                    car_model = review["car_model"], car_year = review["car_year"], 
-                                    sentiment = review["sentiment"], id = review["id"])
+            id = review["id"]
+            name = review["name"]
+            dealership = review["dealership"]
+            review = review["review"]
+            purchase = review["purchase"]          
+            purchase_date = review.get("purchase_date", "-")
+            car_make = review.get("car_make", "-")
+            car_model = review.get("car_model", "-")
+            car_year = review.get("car_year", "-")
+            sentiment = review.get("sentiment", "-")
+            
+            review_obj = DealerReview(dealership = dealership, name = name, purchase = purchase, review = review, 
+                                    purchase_date = purchase_date, car_make = car_make, car_model = car_model, 
+                                    car_year = car_year, sentiment = sentiment, id = id)
             
             results.append(review_obj)
 
