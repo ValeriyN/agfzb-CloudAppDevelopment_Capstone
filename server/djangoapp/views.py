@@ -128,6 +128,8 @@ def get_dealer_details(request, dealer_id):
         return render(request, 'djangoapp/dealer_details.html', {"reviews":reviews})
 
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    if request.method == "POST" and request.user.is_authenticated():
+        URL = "https://us-south.functions.appdomain.cloud/api/v1/web/0f4069cb-e4a8-4bb4-8c9f-57ca55c8425a/dealership-package/post-review"
+  
 
