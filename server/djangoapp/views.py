@@ -110,9 +110,9 @@ def registration_request(request):
 
 def get_dealerships(request):
     if request.method == "GET":
-        url = "https://us-south.functions.appdomain.cloud/api/v1/web/0f4069cb-e4a8-4bb4-8c9f-57ca55c8425a/dealership-package/get-dealership"
+        URL = "https://us-south.functions.appdomain.cloud/api/v1/web/0f4069cb-e4a8-4bb4-8c9f-57ca55c8425a/dealership-package/get-dealership"
         # Get dealers from the URL
-        dealerships = get_dealers_from_cf(url)
+        dealerships = get_dealers_from_cf(URL)
         # Concat all dealer's short name
         # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
@@ -122,14 +122,18 @@ def get_dealerships(request):
 # Create a `get_dealer_details` view to render the reviews of a dealer
 def get_dealer_details(request, dealer_id):
      if request.method == "GET":
-        URL = "https://us-south.functions.appdomain.cloud/api/v1/web/0f4069cb-e4a8-4bb4-8c9f-57ca55c8425a/dealership-package/get-review"
-        reviews = get_dealer_reviews_from_cf(URL, dealer_id)
+        URL_REVIEW = "https://us-south.functions.appdomain.cloud/api/v1/web/0f4069cb-e4a8-4bb4-8c9f-57ca55c8425a/dealership-package/get-review"
+        URL_DEALERSHIP = "https://us-south.functions.appdomain.cloud/api/v1/web/0f4069cb-e4a8-4bb4-8c9f-57ca55c8425a/dealership-package/get-dealership"
+        reviews = get_dealer_reviews_from_cf(URL_REVIEW, dealer_id)
+        dealership_info = get_dealers_from_cf(URL_DEALERSHIP, id=dealer_id)[0]
         # return HttpResponse(reviews)
-        return render(request, 'djangoapp/dealer_details.html', {"reviews":reviews})
+        return render(request, 'djangoapp/dealer_details.html', {"reviews":reviews, "dealer":dealership_info})
 
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
     if request.method == "POST" and request.user.is_authenticated():
         URL = "https://us-south.functions.appdomain.cloud/api/v1/web/0f4069cb-e4a8-4bb4-8c9f-57ca55c8425a/dealership-package/post-review"
-  
+    elif request.method == "GET":
+        return render(request, 'djangoapp/add_review.html', {"dealer_id":dealer_id})
+
 

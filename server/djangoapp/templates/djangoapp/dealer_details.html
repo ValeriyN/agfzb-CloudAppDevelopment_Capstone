@@ -8,8 +8,9 @@
         {% endif %}
 
         <h3>Reviews for <b>{{dealer.full_name}}</b></h3>
-
         <div class="container">
+            <button type="button" class="btn btn-primary mt-2 mb-3">Add review</button>
+
             <div class="card-columns">
                 {% for review in reviews %}
                 <div class="col-auto mb-3">
@@ -38,7 +39,6 @@
         </div>
 
     <!-- Remove this line the first time you edit this file -->
-    <h1>List of Dealer Reviews</h1>
     <ul>
     {% for review in reviews %}
         <li><strong>{{ review.review }}</strong> <br>

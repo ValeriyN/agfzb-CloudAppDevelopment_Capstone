@@ -55,7 +55,10 @@ def post_request(url, json_payload, **kwargs):
 def get_dealers_from_cf(url, **kwargs):
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url)
+    params = {'url': url}
+    if 'dealer_id' in kwargs:
+        params['id'] = kwargs['dealer_id']
+    json_result = get_request(**params)
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result
@@ -69,7 +72,7 @@ def get_dealers_from_cf(url, **kwargs):
             results.append(dealer_obj)
 
     return results
-
+    
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
 def get_dealer_reviews_from_cf(url, dealer_id):
