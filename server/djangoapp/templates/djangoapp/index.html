@@ -5,7 +5,7 @@
     <h1>List of Dealers</h1>
     <ul>
     {% for dealer in dealers %}
-        <li><strong>{{ dealer.full_name }}</strong> ({{dealer.zip}}, {{dealer.state}}, {{dealer.city}}, {{dealer.address}}) </li>
+        <li><a href="{% url 'djangoapp:dealer_details' dealer_id=dealer.id%}"><strong>{{ dealer.full_name }}</strong></a> ({{dealer.zip}}, {{dealer.state}}, {{dealer.city}}, {{dealer.address}}, {{dealer.id}}) </li>
     {% endfor %}
     </ul>
     <!--Add a nav bar here -->

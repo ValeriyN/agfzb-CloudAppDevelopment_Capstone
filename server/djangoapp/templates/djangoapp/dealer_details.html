@@ -48,6 +48,10 @@
         </li>
     {% endfor %}
     </ul>
+    {% if reviews|length == 0 %}
+        <h3>This dealer has no reviews</h3>
+    {% endif %}
+
 
     <!--Add a nav bar here -->
 
