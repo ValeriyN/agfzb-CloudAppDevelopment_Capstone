@@ -1,5 +1,8 @@
 import requests
 import json
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 import Features, SentimentOptions
 # import related models here
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
@@ -14,12 +17,15 @@ def get_request(url, **kwargs):
     print("GET from {} ".format(url))
     try:
         # Call get method of requests library with URL and parameters
-        if "api_key" in kwargs:
-            response = requests.get(url, headers={'Content-Type': 'application/json'},
-                       auth=HTTPBasicAuth('apikey', kwargs["api_key"]), params=kwargs)
-        else:
-            response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                        params=kwargs)
+        args = {
+            'url': url,
+            'headers': {'Content-Type': 'application/json'},
+            'params': kwargs
+        }
+        if "api_key" in kwargs: 
+            args['auth']=HTTPBasicAuth('apikey', kwargs["api_key"])
+        
+        response = requests.get(**args)
 
     except:
         # If any error occurs
@@ -88,7 +94,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             car_make = review.get("car_make", "-")
             car_model = review.get("car_model", "-")
             car_year = review.get("car_year", "-")
-            sentiment = review.get("sentiment", "-")
+            sentiment = analyze_review_sentiments(review["review"])
             
             review_obj = DealerReview(id = id, name = name, dealership = dealership, review = review_txt, purchase = purchase, 
                                     purchase_date = purchase_date, car_make = car_make, car_model = car_model, 
@@ -106,11 +112,12 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 def analyze_review_sentiments(text):
     URL = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/6a1c95c1-da4f-4be6-a614-aec3b2c127f2"
     API_KEY = "UTb1ILtigmwGs3YKJtl6cETnUBKSdR1xGyMzecIMPGH9"
-    
+
     authenticator = IAMAuthenticator(API_KEY)
     natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
     natural_language_understanding.set_service_url(URL)
-    response = natural_language_understanding.analyze( text=text+"hello hello hello",features=Features(sentiment=SentimentOptions(targets=[text+"hello hello hello"]))).get_result()
+    response = natural_language_understanding.analyze( text=text+"hello hello hello",
+        features=Features(sentiment=SentimentOptions(targets=[text+"hello hello hello"]))).get_result()
     label=json.dumps(response, indent=2)
     label = response['sentiment']['document']['label']
     
