@@ -3,12 +3,35 @@
 {% block content %}
     <!-- Remove this line the first time you edit this file -->
     <h1>List of Dealers</h1>
-    <ul>
-    {% for dealer in dealers %}
-        <li><a href="{% url 'djangoapp:dealer_details' dealer_id=dealer.id%}"><strong>{{ dealer.full_name }}</strong></a> ({{dealer.zip}}, {{dealer.state}}, {{dealer.city}}, {{dealer.address}}, {{dealer.id}}) </li>
-    {% endfor %}
-    </ul>
+    <table class="table" id="table" data-filter-control="true">
+        <thead>
+            <tr>
+                <th data-field="id">ID</th>
+                <th data-field="dealer_full_name">Dealer Name</th>
+                <th data-field="city">City</th>
+                <th data-field="address">Address</th>
+                <th data-field="zip">ZIP</th>
+                <th data-field="state" data-filter-control="select">State</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dealer in dealers %}
+                <tr>
+                    <td>{{dealer.id}}</td>
+                    <td><a href="{% url 'djangoapp:dealer_details' dealer_id=dealer.id%}">{{ dealer.full_name }}</a> </td>
+                    <td>{{dealer.city}}</td>
+                    <td>{{dealer.address}}</td>
+                    <td>{{dealer.zip}}</td>
+                    <td>{{dealer.state}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <!--Add a nav bar here -->
-
+    <script>
+        $(function() {
+          $('#table').bootstrapTable()
+        })
+      </script>
     <!--Add a dealer table here -->
 {% endblock %}
