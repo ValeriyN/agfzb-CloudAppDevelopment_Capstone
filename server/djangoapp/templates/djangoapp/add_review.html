@@ -21,7 +21,7 @@
             <label for="car">Car model (if purchased):</label>
             <select name="car" id="car" class="form-select" required>
                 {% for car in cars %}
-                <option selected value={{car.id}}>{{car.name}}-{{car.car_make.name}}-{{ car.year|date:"Y" }}
+                <option selected value={{car.id}}>{{car.name}}-{{car.carMake.name}}-{{ car.year|date:"Y" }}
                 </option>
                 {% endfor %}
             </select>
